@@ -1,0 +1,593 @@
+@charset "utf-8";
+html,body,div,h2,ul,li,span,em,p,dl,dd,i,input, textarea, select, option,button,a{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body{
+    font-family: "Microsoft Yahei","宋体", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "WenQuanYi Micro Hei", "sans-serif";
+    font-size: 14px;
+    background: #f7f7f7;
+    height: 100%;
+    overflow: hidden;
+    color: #666;
+}
+html,body,#app{
+  width: 100%;
+  height: 100%;
+}
+ul,li{
+  list-style: none;
+}
+h2{
+  font-size: 14px;
+  font-weight: normal;
+}
+button{
+  border: none;
+  cursor: pointer;
+}
+textarea{
+  resize: none;
+  border-radius: 5px;
+  color: #5a5e66;
+  border-color: #D8DCE5;
+  width: 100%;
+  padding: 10px;
+  min-height: 70px;
+}
+input{
+  outline: none;
+}
+a{
+  text-decoration: none;
+  cursor: pointer;
+}
+em{
+  font-style: normal;
+}
+.loncom_family_yahei{
+  font-family: "Microsoft Yahei";
+}
+.loncom_color{
+  color: #0096ba;
+}
+.loncom_color999{
+  color: #999;
+}
+.loncom_font_size12{
+  font-size: 12px;
+}
+.loncom_p15{
+  padding: 15px;
+}
+.loncom_ml5{
+  margin-left: 5px !important;
+}
+.loncom_ml10{
+  margin-left: 10px !important;
+}
+.loncom_ml15{
+  margin-left: 15px !important;
+}
+.loncom_mr5{
+  margin-right: 5px !important;
+}
+.loncom_mr10{
+  margin-right: 10px !important;
+}
+.loncom_mb10{
+  margin-bottom: 10px !important;
+}
+.loncom_mb15{
+  margin-bottom: 15px !important;
+}
+.loncom_mt10{
+  margin-top: 10px !important;
+}
+.loncom_pr20{
+  padding-right: 20px !important;
+}
+.loncom_mb20{
+  margin-bottom: 20px !important;
+}
+.loncom_mb50{
+  margin-bottom: 50px !important;
+}
+.loncom_fl{
+  float:left;
+}
+.loncom_fr{
+  float: right;
+}
+.loncom_overflow_hidden{
+  overflow: hidden;
+}
+.loncom_public_shadow {
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+}
+.loncom_public_shadow:hover {
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.45);
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.45);
+}
+.loncom_dis_inline{
+  display: inline;
+}
+.loncom_dis_inlineblock{
+  display: inline-block;
+}
+.loncom_content{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.loncom_topnav{
+  width: 100%;
+  height: 66px;
+  background: url(../images/nav_bg.jpg) repeat right center;
+  background-size: 100% 100%;
+}
+.loncom_topnav_logo{
+  padding: 13px 0 0 13px;
+  min-width: 300px;
+}
+.loncom_topnav ul{
+  padding: 2px;
+  overflow: hidden;
+}
+.loncom_topnav li{
+  float: left;
+  width: 80px;
+  height: 62px;
+}
+.loncom_topnav li a em{
+  width: 26px;
+  height: 26px;
+  display: block;
+  margin: 0 auto 5px auto;
+  overflow: hidden;
+}
+.loncom_topnav li a{
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding-top: 5px;
+}
+.loncom_topnav li a.router-link-active,
+.loncom_topnav li a:hover{
+  background: url(../images/nav_hover_bg.png) no-repeat center;
+  color: #0096BA;
+}
+.loncom_topnav li a.router-link-active em img,
+.loncom_topnav li a:hover em img{
+  margin-top: -26px;
+}
+.loncom_topnav_span span{
+  width: 80px;
+  display: block;
+  text-align: center;
+  float: left;
+  font-size: 20px;
+  color: #fff;
+}
+.loncom_topnav_span .el-badge{
+  margin-top:22px;
+}
+
+.loncom_topnav_span .el-badge .el-badge__content{
+  background-color:#FF0000;
+  border:none;
+}
+.loncom_topnav_span .el-dropdown-link{
+  margin-top: 22px;
+}
+.loncom_topnav_span .el-dropdown-link .fa-caret-down{
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.loncom_con{
+  width:100%;
+  height: -webkit-calc(100% - 66px);
+  height: -moz-calc(100% - 66px);
+  height: calc(100% - 66px);
+  position: relative;
+}
+.loncom_con_left{
+  height: 100%;
+  float: left;
+  position: absolute;
+  left: 0;
+  z-index: 99;
+  background: #B2DFE6;
+  transition: all .2s linear;
+}
+.loncom_left_navtop{
+  width: 100%;
+  height: 40px;
+  background: #02657C;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s linear;
+}
+.loncom_left_navtop i{
+  margin-top: 6px;
+  color: #fff;
+  font-size: 26px;
+  transition: all .2s linear;
+}
+.loncom_left_navcon li .lon_nav{
+  padding: 12px 0;
+  display: block;
+  color: #4a787a;
+  transition: all .2s linear;
+  font-size: 14px;
+  line-height: 16px;
+}
+.loncom_left_navcon li dl a{
+  padding: 12px 0;
+  display: block;
+  color: #4a787a;
+  transition: all .2s linear;
+  line-height: 16px;
+  font-size: 12px;
+  padding-left: 30px;
+}
+.loncom_left_navcon li em{
+  display: inline-block;
+  height: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+  transition: all .2s linear;
+  margin: 0 8px 0 20px;
+}
+.loncom_left_navcon li em img{
+  height: 32px;
+}
+.loncom_left_navcon li span{
+  vertical-align: middle;
+  transition: all 2s linear;
+  min-width: 60px;
+  text-align: center;
+  display: inline-block;
+}
+.loncom_left_navcon li .router-link-active .lon_nav{
+  color: #1796b8;
+  background: #D0F0F5;
+}
+.loncom_left_navcon li .router-link-active .lon_nav em img{
+  margin-top: -16px;
+}
+.loncom_left_navcon li dl{
+  background: #D0F0F5;
+  display: none;
+}
+.loncom_left_navcon li .router-link-active dl{
+  display: block;
+}
+.loncom_left_navcon li dl .router-link-active{
+  background: #f3f3f3;
+}
+.loncom_left_navcon li .lon_nav i{
+  width: 12px;
+  height: 12px;
+  float: right;
+  margin: 2px 20px 0 6px;
+  transition: all 0.5s ease-in-out;
+}
+.loncom_left_navcon li .lon_nav i.trans,
+.loncom_left_navcon li .router-link-active .lon_nav i{
+  transform: rotate(45deg);
+}
+
+.loncom_con_right{
+  width: 100%;
+  height: 100%;
+  float: left;
+  transition: all .2s linear;
+}
+.loncom_public_top {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #d2d2d2;
+  padding: 5px 15px;
+  color: #333;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.loncom_public_con {
+  width: 100%;
+  padding:15px;
+  height: calc(100% - 40px);
+}
+.content{
+  width: 100%;
+  height: calc(100% - 40px);
+}
+
+.alarm_normal_color{
+  color: #00B15F;
+}
+.alarm_one_color{
+  color: #C5051B;
+}
+.alarm_two_color{
+  color: #FF1A07;
+}
+.alarm_three_color{
+  color: #FF7B00;
+}
+.alarm_four_color{
+  color: #FFA300;
+}
+.alarm_normal_bg{
+  background: #00B15F;
+}
+.alarm_one_bg{
+  background: #C5051B;
+}
+.alarm_two_bg{
+  background: #FF1A07;
+}
+.alarm_three_bg{
+  background: #FF7B00;
+}
+.alarm_four_bg{
+  background: #FFA300;
+}
+.circle10{
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.loncom_dialog_con{
+  padding: 20px;
+}
+/*重置element*/
+.el-dialog__body{
+  padding: 0 !important;
+}
+.el-dialog, .el-message-box {
+    margin-bottom: 0 !important;
+    border-radius: 10px !important;
+}
+.el-dialog__header, .el-message-box__header {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 11px 20px 10px !important;
+    background: #f2f2f2;
+    border-radius: 10px 10px 0 0;
+}
+.el-dialog__title, .el-message-box__title {
+    font-size: 14px !important;
+    color: #666 !important;
+}
+.dialog-footer {
+    padding: 15px 20px !important;
+    text-align: right;
+}
+.dialog-footer, .el-message-box__btns {
+    border-top: 1px solid #e0e0e0;
+}
+.dialog-footer .el-button, .el-message-box__btns .el-button {
+    padding: 8px 20px;
+}
+.el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label{
+  font-size: 14px !important;
+}
+.el-message-box__content {
+    padding: 50px 15px !important;
+}
+.el-form-item__content{
+  display: block !important;
+  min-height: 38px !important;
+}
+.el-form--inline .el-form-item__content{
+  display: inline-block !important;
+}
+.loncom_scrollbar .el-scrollbar__wrap,
+.loncom_content .el-scrollbar__wrap{
+  overflow-x: hidden !important;
+}
+.el-select{
+  width: 100%;
+}
+.el-transfer-panel{
+  width: calc(50% - 65px) !important;
+}
+.search .el-input-group__append, .el-input-group__prepend{
+  background:#fff;
+  padding: 0 10px;
+}
+.search .el-input__inner{
+  border-right: none;
+}
+.search .el-input__inner:focus,.el-input__inner:hover {
+  outline:none;
+  border-color:#DCDFE6;
+  box-shadow:none;
+}
+.search_form_table .el-form-item{
+  margin-bottom: 5px;
+}
+.el-tabs,.el-tab-pane,.loncom_tabbox{
+  width: 100%;
+  height: 100%;
+}
+.el-tabs__content{
+  width: 100%;
+  height: calc(100% - 55px);
+}
+
+.loncom_tree{
+  width: 250px;
+  height: 100%;
+  float: left;
+}
+.loncom_table {
+  width: calc(100% - 250px);
+  height: 100%;
+  background: #fff;
+  float: left;
+  border:1px solid #e0e0e0;
+  border-left:none;
+}
+.loncom_tree_title {
+  height: 40px;
+  line-height: 35px;
+  background: #fff;
+  text-align: center;
+  font-size: 16px;
+  color: #02657c;
+  border:1px solid #e0e0e0;
+  border-bottom: none;
+}
+.loncom_tree_con {
+  width: 100%;
+  height: calc(100% - 40px);
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px 15px 0 15px;
+}
+
+.search_sort{
+  border: 1px solid #e0e0e0;
+  height: 40px;
+  padding: 0 20px;
+  background: #fff;
+}
+.search_sort .title{
+  line-height: 38px;
+}
+.search_sort .btn{
+  line-height: 35px;
+  float: right;
+}
+.serach_list span{
+  cursor: pointer;
+  padding: 3px 5px;
+}
+.serach_list .active{
+  background: #0096ba;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.loncom_public_add{
+  width: 100%;
+  height: 100%;
+}
+.loncom_public_add .loncom_public_add_title{
+    width: 100%;
+    height: 45px;
+    line-height: 44px;
+    padding: 0 15px;
+    background: #F3F3F3;
+    border: 1px solid #e0e0e0;
+}
+.loncom_public_add .loncom_public_add_con{
+    width: 100%;
+    height: calc(100% - 46px);
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    padding: 30px 20px 20px 20px;
+}
+.loncom_tab{
+  height: 100%;
+  position: relative;
+}
+.loncom_tab_btn{
+  position:absolute;
+  right:20px;
+  top:5px;
+  z-index:1000;
+}
+.loncom_tab .el-tabs__header,
+.loncom_tab .loncom_tabbox {
+  padding:0 20px;
+}
+
+/* gis */
+.search{
+  width: 250px;
+}
+.gis_sort ul{
+  border: 1px solid #D5D4D1;
+  border-radius: 4px;
+  background: #fff;
+  overflow:hidden;
+}
+.gis_sort li{
+  width:80px;
+  height: 28px;
+  float: left;
+  text-align: center;
+  line-height: 28px;
+  font-size:12px;
+  border-right: 1px solid #D5D4D1;
+  cursor: pointer;
+}
+.gis_sort li:nth-last-of-type(1){
+  border: none;
+}
+.gis_sort li.active{
+  color: #fff;
+  background:#13AE67;
+}
+.gis_sort li em{
+  width: 14px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.gis_sort li.warning em{
+  background: url(../images/sli_warning.svg) no-repeat;
+}
+.gis_sort li.lost em{
+  background: url(../images/sli_lost.svg) no-repeat;
+}
+.gis_sort li.normal em{
+  background: url(../images/sli_normal.svg) no-repeat;
+}
+
+.gis_alarm_list{
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  left: 0;
+  bottom: -400px;
+  transition: all .2s linear;
+  background: #f9f9f9;
+  border-bottom: 1px solid #d2d2d2;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+@media (min-width: 1000px) {
+
+
+}
+@media (min-width: 1400px) {
+
+
+
+}
+
+
+
+
+
+
+
