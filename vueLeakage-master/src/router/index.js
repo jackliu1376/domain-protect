@@ -18,6 +18,10 @@ export default new Router({
       component: (resolve) => require(['@/page/login'], resolve),
     },
     {
+      path:'/profile',
+      component: (resolve) => require(['@/page/profile'], resolve),
+    },
+    {
       path: '/register',
       component: (resolve) => require(['@/page/register'], resolve),
     },

@@ -30,14 +30,17 @@
                             <i class="fa fa-user-circle-o"></i><i class="fa fa-caret-down"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>admin</el-dropdown-item>
-                          <router-link to="login">
+                          <router-link to="/profile">
+                          <el-dropdown-item>admin</el-dropdown-item>
+                          </router-link>
+                          <router-link to="/login">
                             <el-dropdown-item style="text-align:center"><i class="fa fa-power-off loncom_mr5"></i>退出</el-dropdown-item>
                           </router-link>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </span>
             </div>
+
         </div>
         <div class="loncom_con">
             <div class="loncom_con_left" ref="loncom_con_left">
@@ -103,6 +106,11 @@ export default {
         leftNavList:[],
         isRouterAlive:true,  //默认view-router显示的，点击刷新用
         leftShow:false, //默认要显示
+        showProfile: false, // 控制滑出卡片的显示和隐藏
+        user: {
+          name: 'admin', // 假设用户名为admin
+          avatar: 'static/images/login_user.png' // 假设头像路径
+        }
       }
     },
     methods:{
