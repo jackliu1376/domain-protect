@@ -15,9 +15,11 @@
                             <el-input v-model.trim="user.psword" type="password" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
                         </el-form-item>
                     </div>
+                  <div class="loncom_buttons">
                     <el-button type="primary" @click="loginIn('userName')" @keydown="keyLogin($event,'userName')">登录</el-button>
+              <el-button @click="goToRegister">没有账号？</el-button>
+                  </div>
                 </el-form>
-              <el-button @click="goToRegister">注册新用户</el-button>
             </div>
         </div>
 
@@ -25,6 +27,10 @@
 </template>
 
 <style>
+.loncom_buttons {
+  display: flex;
+  justify-content: space-between;
+}
 .loncom_register_input .loncom_buttons {
   display: flex;
   justify-content: space-between;

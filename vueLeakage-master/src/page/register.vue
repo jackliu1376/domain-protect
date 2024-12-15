@@ -167,6 +167,7 @@ export default {
         ],
         psword: [
           { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 5, max: 13, message: '密码长度必须在5到13位之间', trigger: 'blur' },
         ],
         confirmPsword: [
           { required: true, message: '请确认密码', trigger: 'blur' },

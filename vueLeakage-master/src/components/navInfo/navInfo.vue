@@ -31,7 +31,9 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>admin</el-dropdown-item>
+                          <router-link to="login">
                             <el-dropdown-item style="text-align:center"><i class="fa fa-power-off loncom_mr5"></i>退出</el-dropdown-item>
+                          </router-link>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </span>
@@ -86,8 +88,8 @@ export default {
             this.$router.push({path:'/login'});
             return;
         }else{
-            this.Init();   
-        }   
+            this.Init();
+        }
     },
     computed:{
       ...mapGetters([
@@ -128,7 +130,7 @@ export default {
             }else{
                 this.navbtn = JSON.parse(sessionStorage.navInfo).navbtn;
             }
-            
+
         },
         //初始化侧边菜单
         InitLeft:function(){
@@ -137,7 +139,7 @@ export default {
                     $(this.$refs.loncom_con_left).css("width","60px");
                     $(this.$refs.loncom_con_right).css({
                         "padding-left":"60px",
-                        
+
                     });
                     $(this.$refs.bars).css({
                         'transform':'rotate(0deg)'
@@ -165,7 +167,7 @@ export default {
                     "padding-left":"0px",
                 });
             }
-            
+
         },
         //切换宽窄侧边导航
         navClick:function(){
@@ -213,11 +215,11 @@ export default {
             this.$nextTick(() => {
                 this.isRouterAlive = true
             })
-        },   
+        },
 
-    }, 
+    },
     watch:{
-        getNavInfo: function(val) { 
+        getNavInfo: function(val) {
             this.navList=val;
         },
         leftNavList:{
@@ -242,9 +244,9 @@ export default {
             this.$nextTick(() => {
                 this.Init();
             })
-            
+
         }
-    } 
+    }
 }
 </script>
 

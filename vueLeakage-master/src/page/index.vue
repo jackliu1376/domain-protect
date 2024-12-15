@@ -35,7 +35,8 @@
                     placeholder="输入需要预测的域名"
                   />
                   <el-button type="primary" @click="performSearch">搜索</el-button>
-                  <button @click="addPerson">添加人员到顶部</button>
+                  <el-button type="primary" id="start-btn" v-if="!isDetecting" @click="real_time_detect">启动实时检测</el-button>
+                  <el-button type="primary" class="stop" id="stop-btn" v-if="isDetecting" @click="stop_real_time_detect">停止实时检测</el-button>
                 </div>
               </div>
             </div>
@@ -64,18 +65,18 @@
           <table class="scrollable-table">
             <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Email</th>
+              <th>域名</th>
+              <th>检测结果</th>
+              <th>时间</th>
+              <th>等级</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(person, index) in people" :key="index">
-              <td>{{ person.ID }}</td>
-              <td>{{ person.Name }}</td>
-              <td>{{ person.Age }}</td>
-              <td>{{ person.Email }}</td>
+            <tr v-for="(domain, index) in domainList" :key="index">
+              <td>{{ domain.num }}</td>
+              <td>{{ domain.res }}</td>
+              <td>{{ domain.time }}</td>
+              <td>{{ domain.level }}</td>
             </tr>
             <!-- 更多行数据 -->
             </tbody>
@@ -87,6 +88,10 @@
 </template>
 
 <style>
+
+.stop {
+  background-color: #f44336;
+}
 .table-container {
   max-height: 650px; /* 根据需要调整最大高度 */
   overflow-y: scroll; /* 垂直方向上的滚动条 */
@@ -303,6 +308,7 @@
 </style>
 <script>
 import Search from "el-table-pagination/packages/search";
+import { io } from 'socket.io-client';
 
 var axios = require('axios')
 export default {
@@ -312,13 +318,13 @@ export default {
     }
   },
     created () {
-
         axios.get('static/config.json').then(r=>{
             console.log(r)
         });
+
     },
     mounted() {
-         var myDate = new Date();
+        var myDate = new Date();
         var theDate=myDate.Format("yyyy年MM月dd日");
         $("#myDate").html(theDate);
         var str = "星期" + "日一二三四五六".charAt(new Date().getDay());
@@ -341,18 +347,52 @@ export default {
     data() {
        return {
          input2: '',
-         people: [
-           { ID: 1, Name: '1', Age: '1', Email: '1' },
-           { ID: 2, Name: '2', Age: '2', Email: '2' }
-         ]
+         domainList: [
+         ],
+         socket: null,
+         realTimeData: null,
+         newDomain: {},
+         isDetecting: false
 
        }
    },
     methods:{
-      addPerson() {
-        const newPerson = { ID: 1, Name: 'John Doe', Age: '30', Email: 'john.doe@example.com' };
-        this.people.unshift(newPerson); // 将新人员添加到数组的最前面
+      real_time_detect() {
+        this.isDetecting = !this.isDetecting;
+        // 将输入框中的值发送给后台
+        axios.get('http://localhost:5000/start_realtime_detection')
+          .then(response => {
+            // 处理响应
+            console.log(response.data);
+          })
+          .catch(error => {
+            // 处理错误
+            console.error('Error:', error);
+          });
+        this.socket = io('http://localhost:5000'); // 确保使用正确的协议和端口
+        this.socket.on('connect', () => {
+          console.log('WebSocket connection established');
+        });
+        this.socket.on('dns_query_result', (data) => {
+          this.newDomain = { num: data.domain, res: data.result, time: '', level: '' };
+          this.domainList.unshift(this.newDomain); // 将新人员添加到数组的最前面
+        });
       },
+      stop_real_time_detect(){
+        this.isDetecting = !this.isDetecting;
+        // 将输入框中的值发送给后台
+        axios.get('http://localhost:5000/stop_realtime_detection')
+          .then(response => {
+            // 处理响应
+            console.log(response.data);
+          })
+          .catch(error => {
+            // 处理错误
+            console.error('Error:', error);
+          });
+
+      },
+
       performSearch() {
         // 将输入框中的值发送给后台
         axios.post('http://localhost:5001/detect', {
