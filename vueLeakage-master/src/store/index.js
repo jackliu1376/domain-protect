@@ -20,8 +20,8 @@ const storeInfo=new Vuex.Store({
                 {url:'/video/vms',name:'用户',fullName:'用户管理',icon:'static/images/item.png',item:[]},
             ]},
             {url:'/record',name:'档案管理',icon:'static/images/record.svg',item:[
-                {url:'/record/pool',name:'池塘',fullName:'池塘管理',icon:'static/images/item.png',item:[]},
-                {url:'/record/finger',name:'物种',fullName:'物种管理',icon:'static/images/item.png'},
+                {url:'/record/pool',name:'历史',fullName:'域名管理',icon:'static/images/item.png',item:[]},
+                {url:'/record/finger',name:'查询',fullName:'模糊查询',icon:'static/images/item.png'},
             ]},
             {url:'/system',name:'系统管理',icon:'static/images/system.svg',item:[
                 {url:'/system/limits',name:'权限',fullName:'权限管理',icon:'static/images/item.png',item:[
