@@ -55,7 +55,7 @@
                                     <em><img :src="item.icon"></em>
                                     <span v-if="navbtn=='close'">{{item.name}}</span>
                                     <span v-if="navbtn=='open'">{{item.fullName}}</span>
-                                    <!--<i v-if="navbtn=='open'&&item.item&&item.item.length>0"><img src="static/images/sanjiao.png"></i>-->
+                                    <i v-if="navbtn=='open'&&item.item&&item.item.length>0"><img src="static/images/sanjiao.png"></i>
                                 </div>
                                 <dl v-show="navbtn=='open'">
                                     <dd v-for="inItem in item.item">

@@ -1,124 +1,47 @@
 <template>
-    <el-dialog :title="dialogInfo.title" :visible.sync="dialogInfo.visible" width="1000px" :append-to-body='true'>
-        <div class="loncom_dialog_con" style="height:500px;overflow:hidden;">
-            <div class="show_box">
-                <object type='application/x-vlc-plugin' id='vlcs2' events='True' width="100%" height="100%" pluginspage="http://www.videolan.org" codebase="http://downloads.videolan.org/pub/videolan/vlc-webplugins/2.0.6/npapi-vlc-2.0.6.tar.xz">
-                    <param name='mrl' />
-                    <param name="ShowDisplay" value="true" />
-                    <param name='volume' value='50' />
-                    <param name='autoplay' value='true' />
-                    <param name='loop' value='false' />
-                    <param name='fullscreen' value='true' />
-                    <EMBED pluginspage="http://www.videolan.org"
-                    type="application/x-vlc-plugin"
-                    version="VideoLAN.VLCPlugin.2"
-                    width="100%"
-                    height="100%"
-                    text="Waiting for video"
-                    name="vlcs2"
-                    ></EMBED>
-                </object>
-                <div style="clear:both;margin-top:20px;">
-                    <div class="scale_panel">
-                        <div class="scale" ref="scale">
-                            <div ref="scale_con"></div>
-                            <span ref="btn"></span>
-                        </div>
-                        <div class="revBtn" ref="revBtn">
-                            <em v-if="play=='true'" class="pause"></em>
-                            <em v-else class="play"></em>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="show_title">
-
-            </div>
-        </div>
-    </el-dialog>
+  <el-dialog :title="dialogInfo.title" :visible.sync="dialogInfo.visible" width="500px" :append-to-body="true" center>
+    <div class="loncom_dialog_con" style="display: flex; justify-content: center; align-items: center; height: 300px; overflow:hidden;">
+      <!-- 头像容器 -->
+      <div class="avatar-container">
+        <!-- 头像 -->
+        <img :src="dialogInfo.imageSrc" alt="Preview Avatar" class="preview-avatar" />
+      </div>
+    </div>
+  </el-dialog>
 </template>
-<style>
-    .show_box{
-        
-    }
-    .scale_panel {
-        font-size: 12px;
-        width: 100%;
-        padding-right: 18px;
-        position: relative;
-    }
-    .scale {
-        background-repeat: repeat-x;
-        background-position: 0 100%;
-        background-color: #E4E4E4;
-        width: 100%;
-        height: 8px;
-        position: relative;
-        font-size: 0px;
-    }
-    .scale div {
-        background-repeat: repeat-x;
-        background-color: #16C5BB;
-        width: 0px;
-        position: absolute;
-        height: 8px;
-        left: 0;
-        bottom: 0;
-        border-radius: 3px 0 0 3px;
-    }
-    .scale span {
-        background: #4299F4;
-        width: 8px;
-        height: 16px;
-        position: absolute;
-        left: 0px;
-        top: -4px;
-        cursor: pointer;
-        border-radius: 2px;
-    }
-    .revBtn {
-        position: absolute;
-        right: 0;
-        height: 16px;
-        width: 16px;
-        border-radius: 50%;
-        background: #16C5BB;
-        top: -4px;
-        cursor: pointer;
-    }
-    .revBtn em.pause {
-        content: '';
-        width: 6px;
-        border-left: 2px solid #fff;
-        border-right: 2px solid #fff;
-        height: 8px;
-        position: absolute;
-        left: 5px;
-        top: 4px;
-    }
-</style>
+
 <script>
 export default {
-    created () {
-       
-
-    },
-    mounted() {
-        
-    },
-    data() {
-        return {
-            play:'true',
-
-        }
-    },
-    methods:{
-        
-    },
-    
-    props:["dialogInfo"],
-    components:{}
-
-}
+  props: ['dialogInfo','imageSrc'],
+  data() {
+    return {
+      // 头像的URL，这里需要替换成实际的头像URL
+      //imageSrc: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F19%2F20210719150601_4401e.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1685017530&t=eaf36530f8ef00861e3da301dac72b60',
+    };
+  },
+  mounted() {
+    // 可以在这里添加代码来动态设置头像的URL
+  },
+  methods: {
+    // 可以在这里添加方法来处理头像的点击事件或其他交互
+  },
+};
 </script>
 
+<style>
+.avatar-container {
+  width: 100%;
+  max-width: 200px; /* 指定头像的最大宽度 */
+  height: 100%;
+  max-height: 200px; /* 指定头像的最大高度 */
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-avatar {
+  width: 100%; /* 使图片宽度填满容器 */
+  height: 100%; /* 使图片高度填满容器 */
+  object-fit: cover; /* 裁剪图片以填充容器 */
+  border-radius: 50%; /* 使头像显示为圆形 */
+}
+</style>

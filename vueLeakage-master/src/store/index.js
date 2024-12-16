@@ -16,8 +16,8 @@ const storeInfo=new Vuex.Store({
                 {url:'/alarm/inform',name:'通知',fullName:'通知管理',icon:'static/images/item.png'},
                 {url:'/alarm/config',name:'阀值',fullName:'阀值配置',icon:'static/images/item.png'},
             ]},
-            {url:'/video',name:'视频管理',icon:'static/images/video.svg',item:[
-                {url:'/video/vms',name:'视频',fullName:'视频管理',icon:'static/images/item.png',item:[]},
+            {url:'/video',name:'用户管理',icon:'static/images/video.svg',item:[
+                {url:'/video/vms',name:'用户',fullName:'用户管理',icon:'static/images/item.png',item:[]},
             ]},
             {url:'/record',name:'档案管理',icon:'static/images/record.svg',item:[
                 {url:'/record/pool',name:'池塘',fullName:'池塘管理',icon:'static/images/item.png',item:[]},
