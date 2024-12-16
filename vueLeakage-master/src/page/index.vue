@@ -11,16 +11,16 @@
                         <div id="week"></div>
                     </div>
                     <div class="index_top_left_box">
-                        <p><i></i>池塘总数</p>
-                        <span id="ConnectStationCount">11</span>
+                        <p><i></i>检测总数</p>
+                        <span id="ConnectStationCount">{{ totalCountStr }}</span>
                     </div>
                     <div class="index_top_left_box">
-                        <p><i></i>健康池塘数</p>
-                        <span id="BatteryCount">11</span>
+                        <p><i></i>正常域名数</p>
+                        <span id="BatteryCount">{{ normalCountStr }}</span>
                     </div>
                     <div class="index_top_left_box">
-                        <p><i class="danger"></i>危险池塘数</p>
-                        <span id="TemperatureCount" class="danger">11</span>
+                        <p><i class="danger"></i>危险域名数</p>
+                        <span id="TemperatureCount" class="danger">{{ maliciousCountStr }}</span>
                     </div>
                 </div>
               <div class="loncom_fr">
@@ -397,6 +397,30 @@ import { io } from 'socket.io-client';
 
 var axios = require('axios')
 export default {
+  data() {
+    return {
+      input2: '',
+      domainList: [
+      ],
+      isDetecting_1: false,
+      isDetecting_2: false,
+      token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwYjM5MGZmZmVkODE0OTdkYWMzYzJiMTEyMDc2ZjU3YiIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNDMzMjE3MywiZXhwIjoxNzM1NTQxNzczfQ.ToVI6fKoFau7YkWinmkcdZxq8HUKmkevUV3X8j09MOk',
+      socket: null,
+      realTimeData: null,
+      newDomain: {},
+      isDetecting: false,
+      showModal: false,
+      selectedFile: null,
+      fileName: '',
+      isButtonDisabled: true,
+      isButtonDisabled_1: true,
+      searchResult: 0, // 搜索结果，true表示有效，false表示无效
+      totalCountStr: 0,
+      normalCountStr: 0,
+      maliciousCountSt: 0,
+      connectStationCount: 0
+    }
+  },
   computed: {
     Search() {
       return Search
@@ -409,6 +433,27 @@ export default {
 
     },
     mounted() {
+        axios.get('http://localhost:3000/api/domain-analysis/result',{
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        })
+          .then(response => {
+            console.log(response.data);
+            this.totalCountStr = response.data.totalCountStr;
+            this.normalCountStr = response.data.normalCountStr;
+            this.maliciousCountStr = response.data.maliciousCountStr
+            ;
+            var xData=["危险","正常"]
+            var yData=[
+              { value: this.normalCountStr, name: "正常"},
+              { value: this.maliciousCountStr, name: "危险" },
+            ]
+            console.log( this.maliciousCountSt);
+            var allAlarm= this.totalCountStr;
+            piemoreChar("piemoreChar",xData,yData,allAlarm)
+          })
+        // console.log(this.normalCountStr);
         var myDate = new Date();
         var theDate=myDate.Format("yyyy年MM月dd日");
         $("#myDate").html(theDate);
@@ -417,38 +462,7 @@ export default {
 
         hbarChar("barChar")
 
-        var xData=["PH值","溶解氧","水位","温度"]
-        var yData=[
-            { value: 5, name: "PH值" },
-            { value: 5, name: "溶解氧"},
-            { value: 2, name: "水位" },
-            { value: 6, name: "温度"}
-            ]
-        var allAlarm= 18;
-        piemoreChar("piemoreChar",xData,yData,allAlarm)
-
-
     },
-    data() {
-       return {
-         input2: '',
-         domainList: [
-         ],
-         isDetecting_1: false,
-         isDetecting_2: false,
-         socket: null,
-         realTimeData: null,
-         newDomain: {},
-         isDetecting: false,
-         showModal: false,
-         selectedFile: null,
-         fileName: '',
-         isButtonDisabled: true,
-         isButtonDisabled_1: true,
-         searchResult: 0 // 搜索结果，true表示有效，false表示无效
-
-       }
-   },
     methods:{
       handleFileUpload(event) {
         this.selectedFile = event.target.files[0];

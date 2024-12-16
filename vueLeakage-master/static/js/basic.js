@@ -164,7 +164,7 @@ function hbarChar(ID){
 //首页当前告警统计
 function piemoreChar(ID, xData, yData, allAlarm, color) {
     var myChart = echarts.init(document.getElementById(ID));
-    var _color = ["#00DCB8", "#00E1FF", "#A3E8DE", "#579CFF"];
+    var _color = ["#00AF5C", "#C5051B", "#A3E8DE", "#579CFF"];
     if (color) {
         for (var i = 0; i < color.length; i++) {
             if (color[i] != "") {
