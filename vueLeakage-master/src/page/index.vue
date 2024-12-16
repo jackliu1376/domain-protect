@@ -15,10 +15,6 @@
                         <span id="ConnectStationCount">11</span>
                     </div>
                     <div class="index_top_left_box">
-                        <p><i></i>养殖品种数</p>
-                        <span id="PowerCount">11</span>
-                    </div>
-                    <div class="index_top_left_box">
                         <p><i></i>健康池塘数</p>
                         <span id="BatteryCount">11</span>
                     </div>
@@ -28,16 +24,44 @@
                     </div>
                 </div>
               <div class="loncom_fr">
+                <div>
+                  <!-- 按钮 -->
+                  <el-button :disabled="isButtonDisabled_1" type="primary" onclick="window.location='http://127.0.0.1:5002/download-file'">下载结果报告</el-button>
+                  <el-button :disabled="isButtonDisabled" type="primary">停止检测</el-button>
+                  <el-button type="primary" v-if="!isDetecting_1" @click="showModal = true">上传文件</el-button>
+                  <el-button type="primary" v-if="isDetecting_1" @click="filePredict">开始检测</el-button>
+                  <div v-if="fileName" class="file-selected">
+                    {{ fileName }}<span class="delete" @click="clearFile">&times;</span>
+                  </div>
+                  <!-- 弹窗 -->
+                  <transition name="modal">
+                    <div v-if="showModal" class="modal">
+                      <div class="modal-content">
+                        <span class="close" @click="showModal = false">&times;</span>
+                        <h2>上传文件</h2>
+                        <input type="file" @change="handleFileUpload" />
+                        <el-button type="primary" @click="uploadFile">上传</el-button>
+                      </div>
+                    </div>
+                  </transition>
+                </div>
+              </div>
+              <div class="loncom_fl">
                 <div class="input-button-group">
                   <el-input
                     v-model="input2"
                     style="width: 240px"
                     placeholder="输入需要预测的域名"
                   />
-                  <el-button type="primary" @click="performSearch">搜索</el-button>
-                  <el-button type="primary" id="start-btn" v-if="!isDetecting" @click="real_time_detect">启动实时检测</el-button>
-                  <el-button type="primary" class="stop" id="stop-btn" v-if="isDetecting" @click="stop_real_time_detect">停止实时检测</el-button>
+                  <el-button type="primary" @click="performSearch">预测</el-button>
                 </div>
+                <div v-if="searchResult === 1" class="status-indicator green">正常域名</div>
+                <div v-else-if="searchResult === 2" class="status-indicator red">危险域名</div>
+                <div v-else class="status-indicator">正在验证...</div>
+              </div>
+              <div class="loncom_fl" style="margin-left: 15px">
+                <el-button type="primary" id="start-btn" v-if="!isDetecting" @click="real_time_detect">启动实时检测</el-button>
+                <el-button type="primary" class="stop" id="stop-btn" v-if="isDetecting" @click="stop_real_time_detect">停止实时检测</el-button>
               </div>
             </div>
         </div>
@@ -50,6 +74,7 @@
                     </div>
                     <div class="echartbox_con" id="barChar"></div>
                 </div>
+
                 <div class="echart_left">
                     <div class="echartbox_title">
                         当前告警统计
@@ -88,9 +113,70 @@
 </template>
 
 <style>
+.status-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px; /* 与el-input的高度一致 */
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  padding: 0 10px; /* 增加一些内边距 */
+  margin-top: 10px;
+}
+.green {
+  background-color: #00AF5C;
+}
+.red {
+  background-color: #C5051B;
+}
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000; /* 增加z-index以确保弹窗在最上层 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  position: relative; /* 确保内容在弹窗内相对定位 */
+  z-index: 1001; /* 确保内容在弹窗内层级最高 */
+}
+
+.close, .delete {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.file-selected {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
 .stop {
-  background-color: #f44336;
+  background-color: #C5051B;
 }
 .table-container {
   max-height: 650px; /* 根据需要调整最大高度 */
@@ -117,7 +203,6 @@
 
 .input-button-group {
   display: flex; /* 使用Flexbox布局 */
-  align-items: center; /* 垂直居中对齐 */
 }
     .index{
         padding: 15px;
@@ -349,14 +434,83 @@ export default {
          input2: '',
          domainList: [
          ],
+         isDetecting_1: false,
+         isDetecting_2: false,
          socket: null,
          realTimeData: null,
          newDomain: {},
-         isDetecting: false
+         isDetecting: false,
+         showModal: false,
+         selectedFile: null,
+         fileName: '',
+         isButtonDisabled: true,
+         isButtonDisabled_1: true,
+         searchResult: 0 // 搜索结果，true表示有效，false表示无效
 
        }
    },
     methods:{
+      handleFileUpload(event) {
+        this.selectedFile = event.target.files[0];
+        if (this.selectedFile) {
+          this.fileName = this.selectedFile.name; // 设置文件名称
+        }
+      },
+      uploadFile() {
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+          // 这里使用axios进行文件上传，你需要安装axios并导入
+          // import axios from 'axios';
+          axios.post('http://127.0.0.1:5002/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+            .then(response => {
+              console.log('文件上传成功', response);
+              this.$message.success('文件上传成功');
+              this.isDetecting_1 = !this.isDetecting_1;
+              // 处理上传成功的逻辑
+            })
+            .catch(error => {
+              console.error('文件上传失败', error);
+              // 处理上传失败的逻辑
+            })
+            .finally(() => {
+              this.selectedFile = null;
+              this.showModal = false;
+            });
+        } else {
+          alert('请先选择一个文件');
+        }
+    },
+      filePredict(){
+        this.isButtonDisabled = false; // 满足条件，按钮可点击
+        axios.get('http://127.0.0.1:5001/batch_detect')
+          .then(response => {
+            console.log('文件检测完成', response);
+            this.isButtonDisabled = true; // 满足条件，按钮可点击
+            this.isButtonDisabled_1 = false; // 满足条件，按钮可点击
+            this.$message.success('预测完成');
+            // 处理上传成功的逻辑
+          })
+          .catch(error => {
+            console.error('请求失败:', error);
+            this.$message.error('请求失败，请检查网络连接或服务器状态'); // 显示错误提示
+          });
+
+      },
+      clearFile() {
+        axios.get('http://127.0.0.1:5002/delete')
+          .then(response => {
+            console.log('文件删除成功', response);
+          })
+        this.selectedFile = null;
+        this.fileName = ''; // 清除文件名称
+        this.isDetecting_1 = !this.isDetecting_1;
+        this.isButtonDisabled_1=true
+      },
       real_time_detect() {
         this.isDetecting = !this.isDetecting;
         // 将输入框中的值发送给后台
@@ -405,10 +559,18 @@ export default {
           .then(response => {
             // 处理响应
             console.log(response.data);
+            if(response.data.prediction === '正常'){
+              this.searchResult = 1;
+            }else if(response.data.prediction === '恶意'){
+              this.searchResult = 2;
+            } else {
+              this.searchResult = 0;
+            }
           })
           .catch(error => {
             // 处理错误
             console.error('Error:', error);
+            this.searchResult = 0;
           });
       }
     },
