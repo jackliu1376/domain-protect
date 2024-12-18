@@ -43,122 +43,42 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 }
 
+function hbarChar(ID,data) {
+  var myChart = echarts.init(document.getElementById(ID));
 
+  var option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'value',
+      nameLocation: 'middle', // 将x轴名称放在轴的末端
+      name: '次数'
+    },
+    yAxis: {
+      type: 'category',
+      data: ['一级', '二级', '三级', '四级', '五级'],
+      name: '警报等级'
+    },
+    series: [{
+      name: '警报数量',
+      type: 'bar',
+      data: data, // 假设的数据，表示每个警报等级的数量
+      barWidth: '60%'
+    }]
+  };
 
-function hbarChar(ID){
-    var xMax = 1600;
-    var dataShadow = [];
-    var yData=['1号池塘','2号池塘','3号池塘'];
-    for (var i = 0; i < yData.length; i++) {
-        dataShadow.push(xMax);
-    }
-
-    var myChart = echarts.init(document.getElementById(ID));
-
-    var option = {
-        color: ['#C5051B','#FF1A07','#FF7B00','#FFA300'],
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            },
-            //formatter: '{b}：{c}'
-        },
-        grid: {
-            top: '20px',
-            bottom: '20px',
-            left: '100px',
-            right: '-10px',
-            containLabel: true
-        },
-        legend: {
-          y: 'center',
-          orient: 'vertical',
-          x: '20px',
-            textStyle:{
-                color:"#000",
-            },
-            data: ['一级告警', '二级告警','三级告警']
-        },
-        xAxis:  {
-            type: 'category',
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                color: "#000"
-            },
-            splitLine: {
-                show: false,
-            },
-            axisLine: {
-                lineStyle: {
-                    color: "#666",
-                    width: 1,
-                }
-            },
-            axisLabel: {
-                interval: 0,
-                rotate: -50,
-                color: "#000"
-            },
-            data: yData,
-        },
-        yAxis: {
-
-            type: 'value',
-            axisLabel: {
-                color: "#ccc"
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false,
-            },
-            axisLine: {
-                lineStyle: {
-                    color: "#666",
-                    width: 1,
-                }
-            },
-        },
-        series: [
-            // { // For shadow
-            //     type: 'bar',
-            //     itemStyle: {
-            //         normal: {color: '#434343'}
-            //     },
-            //     barGap:'-100%',
-            //     barCategoryGap:'0%',
-            //     data: dataShadow,
-            //     animation: false
-            // },
-            {
-                name: '一级告警',
-                type: 'bar',
-                stack: 'all',
-                barWidth: '30%',
-                data: [1, 0, 0, 0, 1, 0, 0]
-            },
-            {
-                name: '二级告警',
-                type: 'bar',
-                stack: 'all',
-                barWidth: '30%',
-                data: [0, 1, 0, 0, 0, 0, 0]
-            },
-            {
-                name: '三级告警',
-                type: 'bar',
-                stack: 'all',
-                barWidth: '30%',
-                data: [0, 0, 0, 0, 0, 0, 0]
-            }
-        ]
-    };
-    myChart.setOption(option, true);
-    return myChart;
+  myChart.setOption(option, true);
+  return myChart;
 }
 
 //首页当前告警统计

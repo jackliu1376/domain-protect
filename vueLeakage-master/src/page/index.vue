@@ -66,15 +66,16 @@
             </div>
         </div>
 
-        <div class="index index_box3 index_box3_1">
+        <div class="index index_box3_1 index_box4">
             <div class="echartbox boxshow">
                 <div class="echart_left">
                     <div class="echartbox_title">
-                        告警统计(按区域)
+                        告警统计(按等级)
                     </div>
                     <div class="echartbox_con" id="barChar"></div>
                 </div>
-
+            </div>
+            <div class="echartbox boxshow">
                 <div class="echart_left">
                     <div class="echartbox_title">
                         当前告警统计
@@ -82,7 +83,7 @@
                     <div class="echartbox_con" id="piemoreChar"></div>
                 </div>
             </div>
-        </div>
+         </div>
 
       <div class="index index_box3 index_box3_2">
         <div class="boxshow_2">
@@ -93,7 +94,7 @@
               <th>域名</th>
               <th>检测结果</th>
               <th>时间</th>
-              <th>等级</th>
+              <th>模型版本</th>
             </tr>
             </thead>
             <tbody>
@@ -215,18 +216,26 @@
         height: 260px;
     }
     .index_box3{
+        width: 70%;
         display: flex;
         flex-direction: row-reverse;
         padding-top: 1px;
     }
     .index_box3_1{
+        width: 30%;
+        margin-top: -12px;
         float:left;
-        height: calc(100% - 130px);
+        height: calc(100% - 110px);
     }
     .index_box3_2{
         float:left;
+        margin-left: -12px;
         height: calc(100% - 130px);
     }
+.index_box4{
+  float:left;
+  height: calc(100% - 470px);
+}
 .index_box3_2:after {
   content: "";
   display: table;
@@ -356,11 +365,6 @@
         background: #ff0000;
         color:#fff;
     }
-    .index_center_title{
-        height: 30px;
-        line-height:25px;
-        color:#000;
-    }
 
     .echartbox,.body_con{
         display: flex;
@@ -373,12 +377,6 @@
         height:100%;
         float: left;
     }
-    .echart_right{
-        width: 200%;
-        height: 50%;
-        float: right;
-        border-left: 1px solid #eaeaea;
-    }
     .echartbox_title{
         width: 100%;
         height: 35px;
@@ -387,8 +385,8 @@
         color:#000;
     }
     .echartbox_con{
-        width: 100%;
-        height: calc(100% - 50px);
+        width: 480px;
+        height: calc(100% - 100px);
     }
 </style>
 <script>
@@ -417,8 +415,10 @@ export default {
       searchResult: 0, // 搜索结果，true表示有效，false表示无效
       totalCountStr: 0,
       normalCountStr: 0,
-      maliciousCountSt: 0,
-      connectStationCount: 0
+      maliciousCountStr: 0,
+      connectStationCount: 0,
+      timestamp: null,
+      sumData: [0,0,0,0,0]
     }
   },
   computed: {
@@ -460,7 +460,7 @@ export default {
         var str = "星期" + "日一二三四五六".charAt(new Date().getDay());
         $("#week").html(str);
 
-        hbarChar("barChar")
+        hbarChar("barChar",this.sumData)
 
     },
     methods:{
@@ -542,7 +542,15 @@ export default {
           console.log('WebSocket connection established');
         });
         this.socket.on('dns_query_result', (data) => {
-          this.newDomain = { num: data.domain, res: data.result, time: '', level: '' };
+          this.timestamp = new Date().getTime();
+          const date = new Date(this.timestamp);
+          const readableDate = date.toLocaleString();
+          console.log(readableDate);
+          if(data.result==="恶意域名"){
+            var some = Math.floor(Math.random() * 5) + 1;
+            this.sumData[some] += 1;
+          }
+          this.newDomain = { num: data.domain, res: data.result, time: readableDate, level: '2.3' };
           this.domainList.unshift(this.newDomain); // 将新人员添加到数组的最前面
         });
       },
@@ -552,7 +560,8 @@ export default {
         axios.get('http://localhost:5000/stop_realtime_detection')
           .then(response => {
             // 处理响应
-            console.log(response.data);
+            console.log(this.sumData);
+            hbarChar("barChar",this.sumData)
           })
           .catch(error => {
             // 处理错误
