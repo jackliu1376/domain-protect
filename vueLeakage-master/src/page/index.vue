@@ -27,7 +27,7 @@
                 <div>
                   <!-- 按钮 -->
                   <el-button :disabled="isButtonDisabled_1" type="primary" onclick="window.location='http://127.0.0.1:5002/download-file'">下载结果报告</el-button>
-                  <el-button :disabled="isButtonDisabled" type="primary">停止检测</el-button>
+                  <el-button :disabled="isButtonDisabled" type="primary" @click="stop_detection">停止检测</el-button>
                   <el-button type="primary" v-if="!isDetecting_1" @click="showModal = true">上传文件</el-button>
                   <el-button type="primary" v-if="isDetecting_1" @click="filePredict">开始检测</el-button>
                   <div v-if="fileName" class="file-selected">
@@ -567,7 +567,18 @@ export default {
             // 处理错误
             console.error('Error:', error);
           });
-
+      },
+      stop_detection(){
+        axios.get('http://localhost:5001/stop_detection')
+          .then(response => {
+            // 处理响应
+            console.log(this.sumData);
+            this.$message.error('文件检测中断');
+          })
+          .catch(error => {
+            // 处理错误
+            console.error('Error:', error);
+          });
       },
 
       performSearch() {
