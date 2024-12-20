@@ -311,7 +311,7 @@
     }
     .loncom_system_inform_cardboxtoptext{
         width: -webkit-calc(100% - 80px);
-        width: -moz-calc(100% -80px);
+        width: -moz-calc(100% - 80px);
         width: calc(100% - 80px);
         height: auto;
         float: left;
