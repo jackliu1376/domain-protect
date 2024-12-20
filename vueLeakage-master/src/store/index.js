@@ -11,10 +11,10 @@ const storeInfo=new Vuex.Store({
                 {url:'/control/list',name:'视图',fullName:'列表视图',icon:'static/images/item.png'},
             ]},
             {url:'/alarm',name:'告警管理',icon:'static/images/alarm.svg',item:[
-                {url:'/alarm/realtime',name:'实时',fullName:'实时告警',icon:'static/images/item.png',item:[]},
-                {url:'/alarm/history',name:'历史',fullName:'历史告警',icon:'static/images/item.png'},
+                // {url:'/alarm/realtime',name:'实时',fullName:'实时告警',icon:'static/images/item.png',item:[]},
+                // {url:'/alarm/history',name:'历史',fullName:'历史告警',icon:'static/images/item.png'},
                 {url:'/alarm/inform',name:'通知',fullName:'通知管理',icon:'static/images/item.png'},
-                {url:'/alarm/config',name:'阀值',fullName:'阀值配置',icon:'static/images/item.png'},
+                // {url:'/alarm/config',name:'阀值',fullName:'阀值配置',icon:'static/images/item.png'},
             ]},
             {url:'/video',name:'用户管理',icon:'static/images/video.svg',item:[
                 {url:'/video/vms',name:'用户',fullName:'用户管理',icon:'static/images/item.png',item:[]},
@@ -24,15 +24,15 @@ const storeInfo=new Vuex.Store({
                 {url:'/record/finger',name:'查询',fullName:'模糊查询',icon:'static/images/item.png'},
             ]},
             {url:'/system',name:'系统管理',icon:'static/images/system.svg',item:[
-                {url:'/system/limits',name:'权限',fullName:'权限管理',icon:'static/images/item.png',item:[
-                    {url:'/system/limits/depart',name:'部门',fullName:'部门管理',icon:'static/images/xingxing.png'},
-                    {url:'/system/limits/user',name:'用户',fullName:'用户管理',icon:'static/images/xingxing.png'},
-                    {url:'/system/limits/role',name:'角色',fullName:'角色管理',icon:'static/images/xingxing.png'},
-                ]},
-                {url:'/system/sconfig',name:'业务',fullName:'业务配置',icon:'static/images/item.png',item:[
-                    {url:'/system/sconfig/record',name:'档案',fullName:'档案管理',icon:'static/images/xingxing.png'},
-                    {url:'/system/sconfig/scsi',name:'组态',fullName:'组态配置',icon:'static/images/xingxing.png'},
-                ]},
+                // {url:'/system/limits',name:'权限',fullName:'权限管理',icon:'static/images/item.png',item:[
+                //     {url:'/system/limits/depart',name:'部门',fullName:'部门管理',icon:'static/images/xingxing.png'},
+                //     {url:'/system/limits/user',name:'用户',fullName:'用户管理',icon:'static/images/xingxing.png'},
+                //     {url:'/system/limits/role',name:'角色',fullName:'角色管理',icon:'static/images/xingxing.png'},
+                // ]},
+                // {url:'/system/sconfig',name:'业务',fullName:'业务配置',icon:'static/images/item.png',item:[
+                //     {url:'/system/sconfig/record',name:'档案',fullName:'档案管理',icon:'static/images/xingxing.png'},
+                //     {url:'/system/sconfig/scsi',name:'组态',fullName:'组态配置',icon:'static/images/xingxing.png'},
+                // ]},
                 {url:'/system/log',name:'日志',fullName:'操作日志',icon:'static/images/item.png'},
             ]},
         ],

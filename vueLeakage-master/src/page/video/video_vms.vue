@@ -3,8 +3,8 @@
        <div class="loncom_public_top">
             <div class="loncom_fl">用户管理</div>
             <div class="loncom_fr">
-                <el-button type="primary" size="mini" @click="add"><i class="fa fa-plus-circle loncom_mr5"></i>新建</el-button>
-                <el-button type="primary" size="mini" @click="remove"><i class="fa fa-minus-circle loncom_mr5"></i>删除</el-button>
+<!--                <el-button type="primary" size="mini" @click="add"><i class="fa fa-plus-circle loncom_mr5"></i>新建</el-button>-->
+<!--                <el-button type="primary" size="mini" @click="remove"><i class="fa fa-minus-circle loncom_mr5"></i>删除</el-button>-->
             </div>
         </div>
         <div class="loncom_public_con loncom_scroll_con">

@@ -3,8 +3,8 @@
     <div class="loncom_public_top">
       <div class="loncom_fl">域名历史管理</div>
       <div class="loncom_fr">
-        <el-button type="primary" size="mini" @click="add"><i class="fa fa-plus-circle loncom_mr5"></i>新建</el-button>
-        <el-button type="primary" size="mini" @click="remove"><i class="fa fa-minus-circle loncom_mr5"></i>删除</el-button>
+<!--        <el-button type="primary" size="mini" @click="add"><i class="fa fa-plus-circle loncom_mr5"></i>新建</el-button>-->
+<!--        <el-button type="primary" size="mini" @click="remove"><i class="fa fa-minus-circle loncom_mr5"></i>删除</el-button>-->
       </div>
     </div>
     <div class="loncom_public_con loncom_scroll_con">
@@ -23,8 +23,8 @@
         </el-table-column>
         <template slot-scope="scope" slot="preview-handle">
           <div>
-            <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a>
-            <em>|</em>
+<!--            <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a>-->
+<!--            <em>|</em>-->
             <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
           </div>
         </template>
@@ -91,8 +91,42 @@ export default {
     add() {
       this.addInfo.visible = true;
     },
-    remove(row) {
-      // 删除逻辑
+    remove: function(row) {
+      // 弹出确认对话框
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(() => {
+        // 用户点击确定后执行的代码
+        axios.delete(`http://localhost:3000/files/${row.id}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`, // 传递授权令牌
+          },
+        })
+          .then((response) => {
+            // 请求成功，重新获取数据并显示成功消息
+            this.fetchData(); // 重新获取数据
+            this.$message({
+              type: 'success',
+              message: '删除成功!',
+            });
+          })
+          .catch((error) => {
+            // 请求失败，显示错误消息
+            console.error('Error:', error);
+            this.$message({
+              type: 'error',
+              message: '删除失败!',
+            });
+          });
+      }).catch(() => {
+        // 用户点击取消后执行的代码
+        this.$message({
+          type: 'info',
+          message: '已取消删除',
+        });
+      });
     },
     edit(row) {
       // 编辑逻辑

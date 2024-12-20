@@ -38,7 +38,7 @@ export default new Router({
     {
       path: '/alarm',  // 告警管理
       component: (resolve) => require(['@/page/public'], resolve),
-      redirect: '/alarm/realtime',
+      redirect: '/alarm/inform',
       children: [
         { path: '/alarm/realtime', component: (resolve) => require(['@/page/alarm/alarm_realtime'], resolve) },
         { path: '/alarm/history', component: (resolve) => require(['@/page/alarm/alarm_history'], resolve) },
@@ -66,7 +66,7 @@ export default new Router({
     {
       path: '/system',  // 系统管理
       component: (resolve) => require(['@/page/public'], resolve),
-      redirect: '/system/limits',
+      redirect: '/system/log',
       children: [
         {
           path: '/system/limits',
