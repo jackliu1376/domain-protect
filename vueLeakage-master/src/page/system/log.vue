@@ -6,15 +6,15 @@
         <div class="loncom_public_con loncom_scroll_con">
             <el-search-table-pagination  type="local"
                 url=""
-                list-field="list" 
+                list-field="list"
                 total-field="total"
-                method='post' 
+                method='post'
                 :formOptions="table_forms"
-                border :data="table_data" :columns="table_columns" ref="thisRef">   
-                <el-table-column slot="prepend" type="selection"></el-table-column>   
+                border :data="table_data" :columns="table_columns" ref="thisRef">
+                <el-table-column slot="prepend" type="selection"></el-table-column>
                 <template slot-scope="scope" slot="preview-handle">
                     <div>
-                        <a href="javascript:;" class="loncom_color" @click="edit (scope.row)">编辑</a> 
+                        <a href="javascript:;" class="loncom_color" @click="edit (scope.row)">编辑</a>
                     </div>
                 </template>
             </el-search-table-pagination>
@@ -28,7 +28,7 @@
 <script>
 export default {
     created () {
-        
+
     },
     mounted() {
         scrollCon();
@@ -36,9 +36,9 @@ export default {
     data() {
        return {
           　table_data:[
-                {num:'1',ip:'192.168.16.6',zh:'admin',time:'2018-10-11 12:22:12',content:'删除账号'},
-                {num:'2',ip:'192.168.16.6',zh:'小张',time:'2018-10-11 12:22:12',content:'删除账号'},
-                {num:'3',ip:'192.168.16.6',zh:'haha',time:'2018-10-11 12:22:12',content:'删除账号'},
+                {num:'1',ip:'127.0.0.1',zh:'admin',time:'2024-12-15 12:22:12',content:'删除账号'},
+                {num:'2',ip:'127.0.0.1',zh:'admin',time:'2024-12-08 8:27:02',content:'删除档案'},
+                {num:'3',ip:'127.0.0.1',zh:'admin',time:'2024-12-07 15:48:51',content:'模糊检索'},
             ],
             table_forms: {
                 inline: true,
@@ -59,7 +59,7 @@ export default {
        }
    },
     methods:{
-       
+
     },
     components:{}
 }

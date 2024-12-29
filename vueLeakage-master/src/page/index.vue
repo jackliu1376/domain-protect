@@ -11,8 +11,8 @@
                         <div id="week"></div>
                     </div>
                     <div class="index_top_left_box">
-                        <p><i></i>检测总数</p>
-                        <span id="ConnectStationCount">{{ totalCountStr }}</span>
+                        <p><i class="total"></i>检测总数</p>
+                        <span id="ConnectStationCount" class="total">{{ totalCountStr }}</span>
                     </div>
                     <div class="index_top_left_box">
                         <p><i></i>正常域名数</p>
@@ -60,8 +60,15 @@
                 <div v-else class="status-indicator">正在验证...</div>
               </div>
               <div class="loncom_fl" style="margin-left: 15px">
-                <el-button type="primary" id="start-btn" v-if="!isDetecting" @click="real_time_detect">启动实时检测</el-button>
-                <el-button type="primary" class="stop" id="stop-btn" v-if="isDetecting" @click="stop_real_time_detect">停止实时检测</el-button>
+                <el-button type="primary" id="start-btn" v-if="!isDetecting" @click="realTimeDetect">启动实时检测</el-button>
+                <el-button type="primary" class="stop" id="stop-btn" v-if="isDetecting" @click="stopRealTimeDetect">停止实时检测</el-button>
+              </div>
+              <div class="loncom_fl" style="margin-left: 15px">
+                <el-select v-model="selectedModel" placeholder="请选择模型" @change="handleModelChange">
+                  <el-option label="模型一" value="model1"></el-option>
+                  <el-option label="模型二" value="model2"></el-option>
+                </el-select>
+<!--                <el-button type="primary" @click="performSearch">预测</el-button>-->
               </div>
             </div>
         </div>
@@ -312,6 +319,9 @@
     .index_top_left_box p i{
         background:#00AF5C;
     }
+.index_top_left_box p i.total{
+  background: #b51da1;
+}
     .index_top_left_box p i.danger{
         background:#C5051B;
     }
@@ -326,6 +336,9 @@
     .index_top_left_box span{
         color:#00AF5C;
     }
+.index_top_left_box span.total{
+  color: #b51da1;
+}
     .index_top_left_box span.danger{
         color:#C5051B;
     }
@@ -418,7 +431,8 @@ export default {
       maliciousCountStr: 0,
       connectStationCount: 0,
       timestamp: null,
-      sumData: [0,0,0,0,0]
+      sumData: [0,0,0,0,0],
+      selectedModel: 'model1'
     }
   },
   computed: {
@@ -464,6 +478,10 @@ export default {
 
     },
     methods:{
+      // 处理模型变更
+      handleModelChange(newModel) {
+        this.selectedModel = newModel;
+      },
       handleFileUpload(event) {
         this.selectedFile = event.target.files[0];
         if (this.selectedFile) {
@@ -501,7 +519,9 @@ export default {
     },
       filePredict(){
         this.isButtonDisabled = false; // 满足条件，按钮可点击
-        axios.get('http://127.0.0.1:5001/batch_detect')
+        const url = this.selectedModel === 'model1' ? 'http://127.0.0.1:5001/batch_detect' : 'http://127.0.0.1:5004/kongbatch_detect';
+        console.log(url)
+        axios.get(url)
           .then(response => {
             console.log('文件检测完成', response);
             this.isButtonDisabled = true; // 满足条件，按钮可点击
@@ -525,19 +545,26 @@ export default {
         this.isDetecting_1 = !this.isDetecting_1;
         this.isButtonDisabled_1=true
       },
-      real_time_detect() {
+      realTimeDetect() {
         this.isDetecting = !this.isDetecting;
-        // 将输入框中的值发送给后台
-        axios.get('http://localhost:5000/start_realtime_detection')
+        this.startRealTimeDetectionByModel(this.selectedModel);
+      },
+      stopRealTimeDetect() {
+        this.isDetecting = !this.isDetecting;
+        this.stopRealTimeDetectionByModel(this.selectedModel);
+      },
+      startRealTimeDetectionByModel(model) {
+        const url = model === 'model1' ? 'http://localhost:5000/start_realtime_detection' : 'http://localhost:5005/start_realtime_detection';
+        axios.get(url)
           .then(response => {
-            // 处理响应
             console.log(response.data);
+            // 处理响应
           })
           .catch(error => {
-            // 处理错误
             console.error('Error:', error);
+            // 处理错误
           });
-        this.socket = io('http://localhost:5000'); // 确保使用正确的协议和端口
+        this.socket = model === 'model1' ?io('http://localhost:5000'):io('http://localhost:5005'); // 确保使用正确的协议和端口
         this.socket.on('connect', () => {
           console.log('WebSocket connection established');
         });
@@ -550,26 +577,71 @@ export default {
             var some = Math.floor(Math.random() * 5) + 1;
             this.sumData[some] += 1;
           }
-          this.newDomain = { num: data.domain, res: data.result, time: readableDate, level: '2.3' };
+          this.newDomain = { num: data.domain, res: data.result, time: readableDate, level: model === 'model1' ?'Qing':'Kong' };
           this.domainList.unshift(this.newDomain); // 将新人员添加到数组的最前面
         });
       },
-      stop_real_time_detect(){
-        this.isDetecting = !this.isDetecting;
-        // 将输入框中的值发送给后台
-        axios.get('http://localhost:5000/stop_realtime_detection')
+      stopRealTimeDetectionByModel(model) {
+        const url = model === 'model1' ? 'http://localhost:5000/stop_realtime_detection' : 'http://localhost:5005/stop_realtime_detection';
+        axios.get(url)
           .then(response => {
             // 处理响应
             console.log(this.sumData);
             hbarChar("barChar",this.sumData)
           })
           .catch(error => {
-            // 处理错误
             console.error('Error:', error);
+            // 处理错误
           });
+
       },
+      // real_time_detect() {
+      //   this.isDetecting = !this.isDetecting;
+      //   // 将输入框中的值发送给后台
+      //   axios.get('http://localhost:5000/start_realtime_detection')
+      //     .then(response => {
+      //       // 处理响应
+      //       console.log(response.data);
+      //     })
+      //     .catch(error => {
+      //       // 处理错误
+      //       console.error('Error:', error);
+      //     });
+      //   this.socket = io('http://localhost:5000'); // 确保使用正确的协议和端口
+      //   this.socket.on('connect', () => {
+      //     console.log('WebSocket connection established');
+      //   });
+      //   this.socket.on('dns_query_result', (data) => {
+      //     this.timestamp = new Date().getTime();
+      //     const date = new Date(this.timestamp);
+      //     const readableDate = date.toLocaleString();
+      //     console.log(readableDate);
+      //     if(data.result==="恶意域名"){
+      //       var some = Math.floor(Math.random() * 5) + 1;
+      //       this.sumData[some] += 1;
+      //     }
+      //     this.newDomain = { num: data.domain, res: data.result, time: readableDate, level: '2.3' };
+      //     this.domainList.unshift(this.newDomain); // 将新人员添加到数组的最前面
+      //   });
+      // },
+      // stop_real_time_detect(){
+      //   this.isDetecting = !this.isDetecting;
+      //   // 将输入框中的值发送给后台
+      //   axios.get('http://localhost:5000/stop_realtime_detection')
+      //     .then(response => {
+      //       // 处理响应
+      //       console.log(this.sumData);
+      //       hbarChar("barChar",this.sumData)
+      //     })
+      //     .catch(error => {
+      //       // 处理错误
+      //       console.error('Error:', error);
+      //     });
+      // },
       stop_detection(){
-        axios.get('http://localhost:5001/stop_detection')
+        const url = this.selectedModel === 'model1' ? 'http://127.0.0.1:5001/stop_detection' : 'http://127.0.0.1:5004/kongstop_detection';
+        console.log(url)
+        axios.get(url)
           .then(response => {
             // 处理响应
             console.log(this.sumData);
@@ -580,9 +652,8 @@ export default {
             console.error('Error:', error);
           });
       },
-
-      performSearch() {
-        // 将输入框中的值发送给后台
+      // 模型一的预测请求
+      performSearchModel1() {
         axios.post('http://localhost:5001/detect', {
           "domain": this.input2,
         }, {
@@ -606,6 +677,64 @@ export default {
             console.error('Error:', error);
             this.searchResult = 0;
           });
+      },
+
+      // 模型二的预测请求
+      performSearchModel2() {
+        axios.post('http://localhost:5004/kongdetect', {
+          "domain": this.input2,
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            // 处理响应
+            console.log(response.data);
+            if(response.data.prediction === '正常'){
+              this.searchResult = 1;
+            }else if(response.data.prediction === '恶意'){
+              this.searchResult = 2;
+            } else {
+              this.searchResult = 0;
+            }
+          })
+          .catch(error => {
+            // 处理错误
+            console.error('Error:', error);
+            this.searchResult = 0;
+          });
+      },
+      performSearch() {
+        // // 将输入框中的值发送给后台
+        // axios.post('http://localhost:5004/kongdetect', {
+        //   "domain": this.input2,
+        // }, {
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // })
+        //   .then(response => {
+        //     // 处理响应
+        //     console.log(response.data);
+        //     if(response.data.prediction === '正常'){
+        //       this.searchResult = 1;
+        //     }else if(response.data.prediction === '恶意'){
+        //       this.searchResult = 2;
+        //     } else {
+        //       this.searchResult = 0;
+        //     }
+        //   })
+        //   .catch(error => {
+        //     // 处理错误
+        //     console.error('Error:', error);
+        //     this.searchResult = 0;
+        //   });
+        if (this.selectedModel === 'model1') {
+          this.performSearchModel1();
+        } else if (this.selectedModel === 'model2') {
+          this.performSearchModel2();
+        }
       }
     },
     components:{}
