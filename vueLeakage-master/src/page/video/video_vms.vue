@@ -76,9 +76,9 @@ export default {
            title: "修改密码",
            visible: false,
            userId: null, // 存储当前用户ID
-           token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwYjM5MGZmZmVkODE0OTdkYWMzYzJiMTEyMDc2ZjU3YiIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNDMzMjE3MywiZXhwIjoxNzM1NTQxNzczfQ.ToVI6fKoFau7YkWinmkcdZxq8HUKmkevUV3X8j09MOk'
+           token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno'
          },
-         token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwYjM5MGZmZmVkODE0OTdkYWMzYzJiMTEyMDc2ZjU3YiIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNDMzMjE3MywiZXhwIjoxNzM1NTQxNzczfQ.ToVI6fKoFau7YkWinmkcdZxq8HUKmkevUV3X8j09MOk'
+         token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno'
        }
    },
     methods:{
