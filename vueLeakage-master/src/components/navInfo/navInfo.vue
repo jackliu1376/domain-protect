@@ -3,7 +3,7 @@
         <div class="loncom_topnav">
             <div class="loncom_topnav_logo loncom_fl">
                 <router-link to="/index">
-                    <img src="static/images/logo.png">
+                    <img  class="logo" src="static/images/logo.png">
                 </router-link>
             </div>
             <ul class="loncom_fl" ref="nav_list">
@@ -76,6 +76,15 @@
         </div>
     </div>
 </template>
+
+<style>
+.logo{
+  margin-top: -13px;
+  margin-left: -13px;
+  width: auto;
+  height: 66px;
+}
+</style>
 
 <script>
 

@@ -216,8 +216,8 @@ export default {
                 _this.$message.success('注册成功');
                 _this.$router.push({ path: '/login' });
               }else if(errorMessage === '用户名已存在'){
-                _this.$message.success('用户名已存在');
 
+                _this.$message.success('用户名已存在');
               }
               console.log('Response:', response.data);
             })
