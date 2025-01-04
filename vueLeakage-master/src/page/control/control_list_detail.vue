@@ -13,14 +13,14 @@
                         <span></span>基本信息
                     </div>
                     <div class="map_detail_con map_detail_top_left_con">
-                        <p><span>池塘名称：</span><em id="name">池塘一</em></p>
-                        <p><span>池塘面积：</span><em id="mianji">20</em></p>
-                        <p><span>养殖物种：</span><em id="wuzhong">草鱼</em></p>
+                        <p><span>名称：</span><em id="name">域名网一</em></p>
+                        <p><span>面积：</span><em id="mianji">20</em></p>
+
                     </div>
                 </div>
                 <div class="map_detail_box map_detail_top_right">
                     <div class="map_detail_title">
-                        <span></span>池塘概况
+                        <span></span>域名网概况
                     </div>
                     <div class="map_detail_con">
                         <div class="map_detail_top_rightl">
@@ -32,7 +32,7 @@
                                     <div class="map_detail_controlinfo">
                                         <div class="map_detail_controlbox">
                                             <span>13.3</span>
-                                            <p>溶解氧</p>
+                                            <p>安全性</p>
                                         </div>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                                     <div class="map_detail_controlinfo">
                                         <div class="map_detail_controlbox">
                                             <span>13.3</span>
-                                            <p>水温</p>
+                                            <p>隐蔽性</p>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                     <div class="map_detail_controlinfo">
                                         <div class="map_detail_controlbox">
                                             <span class="alarm">13</span>
-                                            <p>PH值</p>
+                                            <p>价值</p>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                     <div class="map_detail_controlinfo">
                                         <div class="map_detail_controlbox">
                                             <span>45.2</span>
-                                            <p>氨氮值</p>
+                                            <p>危险程度</p>
                                         </div>
                                     </div>
                                 </div>
@@ -101,12 +101,12 @@
             <el-scrollbar style="height:360px;">
                 <el-search-table-pagination  type="local"
                     url=""
-                    list-field="list" 
+                    list-field="list"
                     total-field="total"
-                    method='post' 
+                    method='post'
                     :formOptions="table_forms"
-                    border :data="table_data" :columns="table_columns" ref="thisRef">   
-                    <el-table-column slot="prepend" type="selection"></el-table-column>                                     
+                    border :data="table_data" :columns="table_columns" ref="thisRef">
+                    <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-level">
                         <div class="alarm">
                             <span v-if="scope.row.level=='1'"><i class="alarm_one_bg circle10 loncom_mr5"></i>一级</span>
@@ -114,7 +114,7 @@
                     </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
-                            <a href="javascript:;" class="loncom_color" @click="sure(scope.row)">确认</a> 
+                            <a href="javascript:;" class="loncom_color" @click="sure(scope.row)">确认</a>
                         </div>
                     </template>
                 </el-search-table-pagination>
@@ -300,7 +300,7 @@ export default {
     created () {
         var obj = this.$route.query;
         if(JSON.stringify(obj) != "{}"){ //
-            this.title="池塘名称";
+            this.title="域名网段";
         }
     },
     mounted() {
@@ -309,14 +309,14 @@ export default {
         //获取折线等详情
         var xData = ["09:00", "09:03", "09:13", "09:14", "09:24", "09:34", "09:44", "09:54", "10:04", "10:14", "10:24"];
         var yData = [3, 3.6, 3.4, 3.8, 3.9, 3, 3.8, 3.5, 3.4, 3.9, 3.2, 3.1, 3.7];
-        var lz = lineZoom("lineZoom", name, xData, yData); 
-        var lz1 = lineZoom("lineZoom1", name, xData, yData); 
-        var lz2 = lineZoom("lineZoom2", name, xData, yData);  
+        var lz = lineZoom("lineZoom", name, xData, yData);
+        var lz1 = lineZoom("lineZoom1", name, xData, yData);
+        var lz2 = lineZoom("lineZoom2", name, xData, yData);
         var name = "市电电压";
         function getG() {
-            gaugeChar("gauge1", '溶解氧', 10)
-            gaugeChar("gauge2", 'PH值', 20);
-            gaugeChar("gauge3", '水温', 30)
+            gaugeChar("gauge1", '安全性', 10)
+            gaugeChar("gauge2", '隐蔽性', 20);
+            gaugeChar("gauge3", '危险程度', 30)
         }
 
         $(".map_detail_echarbox_con").resize(function () {
@@ -457,7 +457,7 @@ export default {
             myChart.setOption(option, true);
             return myChart;
         }
-		
+
     },
     data() {
        return {

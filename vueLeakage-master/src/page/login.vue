@@ -15,8 +15,15 @@
                             <el-input v-model.trim="user.psword" type="password" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
                         </el-form-item>
                     </div>
+                  <!-- 验证码组件和输入框 -->
+                  <div class="loncom_captcha">
+                    <s-identify :identifyCode="identifyCode" @refresh="refreshCode"></s-identify>
+                    <el-form-item prop="captcha">
+                      <el-input v-model.trim="user.captcha" placeholder="请输入验证码"></el-input>
+                    </el-form-item>
+                  </div>
                   <div class="loncom_buttons">
-                    <el-button type="primary" @click="loginIn('userName')" @keydown="keyLogin($event,'userName')">登录</el-button>
+                    <el-button type="primary" @click="loginIn('userName')" >登录</el-button>
               <el-button @click="goToRegister">没有账号？</el-button>
                   </div>
                 </el-form>
@@ -123,12 +130,34 @@
     background: #199ED8;
     color: #fff;
     }
+.loncom_captcha {
+
+  display: flex;
+  align-items: center;
+  //margin-bottom: 20px;
+  margin-top: -25px;
+  margin-left: -7px;
+
+}
+
+.loncom_captcha input {
+  margin-top: 25px;
+  margin-left: 2px;
+  flex: 1;
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+}
 
 </style>
 
 <script>
+import SIdentify from './identify.vue'
 var axios = require('axios');
 export default {
+  components: { SIdentify },
   created () {
  },
  data(){
@@ -137,8 +166,12 @@ export default {
           loginFlag:false,
         user:{
             userid:"",
-            psword:""
+            psword:"",
+          captcha: "" // 用户输入的验证码
         },
+      identifyCode: '',
+      identifyCodes: '3456789ABCDEFGHGKMNPQRSTUVWXY',
+      message: '',
         rules: {
 			userid:[
 				{ required: true, message: '请输入用户名', trigger: 'blur' },
@@ -159,50 +192,72 @@ export default {
     goToRegister(){
       this.$router.push({ path: '/register' });
     },
-      keyLogin:function(ev,user){
-		if(ev.keyCode == 13){
-			this.loginIn(user);
-		}
-	  },
-      loginIn:function(formName){
-            var _this=this;
-            this.$refs[formName].validate((valid) => {
-            if (valid) {
-                // this.$message.success('登录成功！');
-                //存登录信息
-                var loginInfo={};
-                if(sessionStorage.loginInfo){
-                    loginInfo=JSON.parse(sessionStorage.loginInfo);
-                }
-                loginInfo.username=this.user.userid;
-                loginInfo.psword=this.user.psword;
-                sessionStorage.loginInfo = JSON.stringify(loginInfo);
 
-// 使用axios发送POST请求
-              axios.post('http://localhost:3000/user/account/token/', {
-                "username": this.user.userid,
-                "password": this.user.psword
-              }, {
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              })
-                .then(function (response) {
-                  const errorMessage = response.data.error_message;
-                  console.log(errorMessage);
-                  if(errorMessage === 'success'){
-                    _this.$router.push({path:'/'});
-                  }
-                  console.log('Response:', response.data);
-                })
-                .catch(function (error) {
-                  _this.$message.warning('账号或密码错误，请重新登录');
-                  console.log('Error:', error.response ? error.response.data : error.message);
-                });
-            }
-        });
+    keyLogin(ev, formName) {
+      if (ev.keyCode === 13) { // 监听回车键
+        this.loginIn(formName);
       }
     },
+    loginIn(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.verifyCode(); // 校验验证码
+          if (this.message === '校验成功！') {
+            // 执行登录逻辑
+            this.doLogin();
+          } else {
+            // 显示验证码错误信息
+            this.message = '验证码错误，请重试。';
+          }
+        }
+      });
+    },
+    verifyCode() {
+      if (this.user.captcha.toUpperCase() === this.identifyCode.toUpperCase()) {
+        this.message = '校验成功！';
+        console.log(this.message)
+      } else {
+        this.message = '校验失败，请重试。';
+      }
+    },
+    doLogin() {
+      axios.post('http://localhost:3000/user/account/token/', {
+        "username": this.user.userid,
+        "password": this.user.psword
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          const errorMessage = response.data.error_message;
+          console.log(errorMessage)
+          if (errorMessage === 'success') {
+            console.log("success")
+            sessionStorage.loginInfo = JSON.stringify("aaa");
+            this.$router.push({ path: '/' });
+          } else {
+            this.$message.error('登录失败：' + errorMessage);
+          }
+        })
+        .catch(error => {
+          this.$message.error('登录失败：' + (error.response ? error.response.data : error.message));
+        });
+    },
+    refreshCode() {
+      this.identifyCode = '';
+      this.makeCode(this.identifyCodes, 4);
+    },
+    makeCode(o, l) {
+      this.identifyCode = '';
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += o[Math.floor(Math.random() * o.length)];
+      }
+    }
+    },
+  mounted() {
+    this.makeCode(this.identifyCodes, 4); // 组件加载时生成验证码
+  },
     watch:{
         loginFlag: {
             handler: function(val) {

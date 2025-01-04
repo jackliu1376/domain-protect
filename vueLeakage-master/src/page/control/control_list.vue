@@ -19,12 +19,12 @@
             <ul class="list_ul">
                 <li v-if="show=='all'||show=='normal'">
                     <div class="list_con" @click="detail">
-                        <div class="list_con_title">#池塘一</div>
+                        <div class="list_con_title">#域名网一</div>
                         <div class="list_content">
                             <div class="list_content_left">
                                 <p>监控状态：<span class="state">正常</span></p>
-                                <p>池塘面积：<span>100㎡</span></p>
-                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>
+                                <p>监控面积：<span>100㎡</span></p>
+<!--                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>-->
                             </div>
                             <div class="list_content_right">
                                 <img src="static/images/login_bg.jpg">
@@ -34,12 +34,12 @@
                 </li>
                 <li v-if="show=='all'||show=='lost'">
                     <div class="list_con list_con_lost" @click="detail">
-                        <div class="list_con_title">#池塘二</div>
+                        <div class="list_con_title">#域名网二</div>
                         <div class="list_content">
                             <div class="list_content_left">
-                                <p>监控状态：<span class="state">废弃</span></p>
-                                <p>池塘面积：<span>100㎡</span></p>
-                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>
+                              <p>监控状态：<span class="state">待查</span></p>
+                              <p>监控面积：<span>100㎡</span></p>
+                              <!--                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>-->
                             </div>
                             <div class="list_content_right">
                                 <img src="static/images/login_bg.jpg">
@@ -49,12 +49,12 @@
                 </li>
                 <li v-if="show=='all'||show=='warning'">
                     <div class="list_con list_con_warning" @click="detail">
-                        <div class="list_con_title">#池塘三</div>
+                        <div class="list_con_title">#域名网三</div>
                         <div class="list_content">
                             <div class="list_content_left">
-                                <p>监控状态：<span class="state">异常</span></p>
-                                <p>池塘面积：<span>100㎡</span></p>
-                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>
+                              <p>监控状态：<span class="state">异常</span></p>
+                              <p>监控面积：<span>100㎡</span></p>
+                              <!--                                <p>物种：<span>花鳗、草鱼、鲢鱼</span></p>-->
                             </div>
                             <div class="list_content_right">
                                 <img src="static/images/login_bg.jpg">
@@ -136,7 +136,7 @@
 import controlTop from '@/components/control_top.vue'
 export default {
     created () {
-        
+
     },
     mounted() {
         scrollCon();
