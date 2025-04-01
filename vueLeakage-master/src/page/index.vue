@@ -30,6 +30,7 @@
                   <el-button :disabled="isButtonDisabled" type="primary" @click="stop_detection">停止检测</el-button>
                   <el-button type="primary" v-if="!isDetecting_1" @click="showModal = true">上传文件</el-button>
                   <el-button type="primary" v-if="isDetecting_1" @click="filePredict">开始检测</el-button>
+                  <el-button :disabled="isButtonDisabled_1" type="success" @click="saveData">保存</el-button>
                   <div v-if="fileName" class="file-selected">
                     {{ fileName }}<span class="delete" @click="clearFile">&times;</span>
                   </div>
@@ -415,7 +416,7 @@ export default {
       ],
       isDetecting_1: false,
       isDetecting_2: false,
-      token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno',
+      token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4M2FiNWM5N2M2Nzc0N2YwYmY1NTRlYTEwOGYzNmQ5NyIsInN1YiI6IjIyIiwiaXNzIjoic2ciLCJpYXQiOjE3NDMyMzUxNDcsImV4cCI6MTc0NDQ0NDc0N30.tocsab416bzBkZAYWgrqgn5a-5XEfPiAJJ6KAtoP85I',
       socket: null,
       realTimeData: null,
       newDomain: {},
@@ -703,6 +704,22 @@ export default {
             // 处理错误
             console.error('Error:', error);
             this.searchResult = 0;
+          });
+      },
+      saveData() {
+        // 发送 POST 请求
+        axios.post('http://localhost:3000/api/file/saveContents', {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        })
+          .then(response => {
+            console.log('数据保存成功', response);
+            this.$message.success('数据保存成功');
+          })
+          .catch(error => {
+            console.error('数据保存失败', error);
+            this.$message.error('数据保存失败');
           });
       },
       performSearch() {

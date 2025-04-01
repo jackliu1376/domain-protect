@@ -27,6 +27,11 @@
     <div class="loncom_public_con loncom_scroll_con">
       <el-table :data="table_data" border style="width: 100%">
         <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column label="序号" width="60" >
+          <template slot-scope="scope">
+            {{ scope.$index + 1 }}
+          </template>
+        </el-table-column>
         <el-table-column prop="id" label="域名编号" width="360"></el-table-column>
         <el-table-column prop="name" label="域名名称" width="720"></el-table-column>
         <el-table-column label="结果" width="213">
@@ -59,7 +64,7 @@ export default {
         width: '850px',
         visible: false,
       },
-      token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno' // 请替换成您的实际token
+      token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZTkzYWQ5NjRmZmQ0OGYwOGY4MGMyOWQ4ZTgxM2JhZCIsInN1YiI6IjIyIiwiaXNzIjoic2ciLCJpYXQiOjE3NDMyMTg2NDgsImV4cCI6MTc0NDQyODI0OH0.sYbGLxm-sEye9slsMyxWcfQjI4l7aVzvCtKQRjsJG-w' // 请替换成您的实际token
     };
   },
   created() {
@@ -84,7 +89,7 @@ export default {
           name: item.domain,
           result: item.detectionResult,
           time: item.detectionTime,
-        }));
+        })).sort((a, b) => new Date(b.time) - new Date(a.time));
       }).catch(error => {
         console.error('Error:', error);
       });

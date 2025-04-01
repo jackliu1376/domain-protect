@@ -22,12 +22,12 @@
                 <el-scrollbar style="height:360px;">
                     <el-search-table-pagination  type="local"
                         url=""
-                        list-field="list" 
+                        list-field="list"
                         total-field="total"
-                        method='post' 
+                        method='post'
                         :formOptions="table_forms"
-                        border :data="table_data" :columns="table_columns" ref="thisRef">   
-                        <el-table-column slot="prepend" type="selection"></el-table-column>                                     
+                        border :data="table_data" :columns="table_columns" ref="thisRef">
+                        <el-table-column slot="prepend" type="selection"></el-table-column>
                         <template slot-scope="scope" slot="preview-level">
                             <div class="alarm">
                                 <span v-if="scope.row.level=='1'"><i class="alarm_one_bg circle10 loncom_mr5"></i>一级</span>
@@ -35,7 +35,7 @@
                         </template>
                         <template slot-scope="scope" slot="preview-handle">
                             <div>
-                                <a href="javascript:;" class="loncom_color" @click="sure(scope.row)">确认</a> 
+                                <a href="javascript:;" class="loncom_color" @click="sure(scope.row)">确认</a>
                             </div>
                         </template>
                     </el-search-table-pagination>
@@ -147,7 +147,7 @@
 import alarmTop from '@/components/alarm_top.vue'
 import Show from '@/components/video_show.vue'
 export default {
-    
+
     created () {
     },
     mounted() {
@@ -155,9 +155,9 @@ export default {
         // 百度地图API功能
         this.map = new BMap.Map("container");
         //this.map.centerAndZoom(new BMap.Point(119.045403, 31.69525), 13); //初始化地图,设置中心点坐标和地图级别3-19
-        this.map.centerAndZoom("海南",9); 
+        this.map.centerAndZoom("海南",9);
         this.map.enableScrollWheelZoom();
-            
+
     },
     data() {
        return {
@@ -211,7 +211,7 @@ export default {
             BMap.Icon.prototype.setSearchName = function(searchName){
                 this.searchName = searchName;
             }
-            
+
             this.map.clearOverlays();
             //去掉地铁线
             this.map.setMapStyle({
@@ -282,7 +282,7 @@ export default {
                 this.map.addOverlay(marker);
                 var infoBox = new BMapLib.InfoBox(this.map, content);
                 addClickHandler(marker, infoBox,info[i].id)
-                
+
 
             }
             function addClickHandler(marker,infoBox,id) {
@@ -295,7 +295,7 @@ export default {
                     $(infoBox.V).find(".video").on("click",function(){
                         _this.showVideo(id);
                     })
-                    
+
                 })
             }
 
@@ -323,20 +323,20 @@ export default {
                         }
                     }
                 }
-                
+
             })
             //搜索
             $("#search_btn").on("click",function(){
                 for(var i=0;i<allmap.length;i++){
                     if(allmap[i].toString() == "[object Marker]"){
                         if(allmap[i].z.uj.searchName==_this.searchInfo){
-                            _this.map.centerAndZoom(new BMap.Point(allmap[i].point.lng,allmap[i].point.lat),19); 
+                            _this.map.centerAndZoom(new BMap.Point(allmap[i].point.lng,allmap[i].point.lat),19);
                         }
                     }
                 }
             })
-            
-            
+
+
         },
         showAlarm:function(id){
             console.log(id)
@@ -355,7 +355,7 @@ export default {
         map:function(val,oldval){
             this.getMap();
         },
-        
+
     },
     components:{alarmTop,Show}
 }

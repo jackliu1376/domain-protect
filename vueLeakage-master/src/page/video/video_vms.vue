@@ -16,6 +16,11 @@
                 :formOptions="table_forms"
                 border :data="table_data" :columns="table_columns" ref="thisRef">
                 <el-table-column slot="prepend" type="selection"></el-table-column>
+              <el-table-column label="序号" width="60" slot="prepend">
+                <template slot-scope="scope">
+                  {{ scope.$index + 1 }}
+                </template>
+              </el-table-column>
                 <template slot-scope="scope" slot="preview-handle">
                     <div>
                         <a href="javascript:;" class="loncom_color" @click="show (scope.row)">预览</a>
@@ -58,6 +63,7 @@ export default {
             forms: []
             },
             table_columns:[
+
               { prop: 'id', label: '用户编码',minWidth:10},
               { prop: 'username', label: '用户名',minWidth:10},
               { prop: 'photo', label: '头像',minWidth:30},
@@ -76,9 +82,9 @@ export default {
            title: "修改密码",
            visible: false,
            userId: null, // 存储当前用户ID
-           token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno'
+           token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZTkzYWQ5NjRmZmQ0OGYwOGY4MGMyOWQ4ZTgxM2JhZCIsInN1YiI6IjIyIiwiaXNzIjoic2ciLCJpYXQiOjE3NDMyMTg2NDgsImV4cCI6MTc0NDQyODI0OH0.sYbGLxm-sEye9slsMyxWcfQjI4l7aVzvCtKQRjsJG-w'
          },
-         token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MWQxZThkOTJmZjI0NmQzYTUwMTY0ZmFkZTRjMWE3ZCIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNTYyOTk0MywiZXhwIjoxNzM2ODM5NTQzfQ.HTh22qFfZaBMVJCWpSicKoLYnC5l6T8r6Ex5KRU2Rno'
+         token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZTkzYWQ5NjRmZmQ0OGYwOGY4MGMyOWQ4ZTgxM2JhZCIsInN1YiI6IjIyIiwiaXNzIjoic2ciLCJpYXQiOjE3NDMyMTg2NDgsImV4cCI6MTc0NDQyODI0OH0.sYbGLxm-sEye9slsMyxWcfQjI4l7aVzvCtKQRjsJG-w'
        }
    },
     methods:{

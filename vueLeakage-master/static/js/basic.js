@@ -95,7 +95,7 @@ function piemoreChar(ID, xData, yData, allAlarm, color) {
     var option = {
         color: _color,
         title: {
-            text: "告警总数：" + allAlarm,
+            text: "检测总数：" + allAlarm,
             top: 15,
             left: 15,
             textStyle: {

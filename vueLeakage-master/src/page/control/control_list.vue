@@ -2,16 +2,16 @@
     <div class="loncom_content">
        <div class="loncom_public_top">
             <div class="search loncom_fl">
-                <el-input placeholder="请输入池塘名称" v-model="searchInfo" size="mini">
+                <el-input placeholder="请输入名称" v-model="searchInfo" size="mini">
                     <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
             </div>
             <div class="gis_sort loncom_fr">
                 <ul>
                     <li class="active" data-name="all">全部</li>
-                    <li class="warning" data-name="warning"><em></em>危险池塘</li>
-                    <li class="lost" data-name="lost"><em></em>废弃池塘</li>
-                    <li class="normal" data-name="normal"><em></em>健康池塘</li>
+                    <li class="warning" data-name="warning"><em></em>危险</li>
+                    <li class="lost" data-name="lost"><em></em>待查</li>
+                    <li class="normal" data-name="normal"><em></em>健康</li>
                 </ul>
             </div>
         </div>

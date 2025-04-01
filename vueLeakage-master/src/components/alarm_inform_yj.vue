@@ -69,7 +69,7 @@ export default {
                 ],
 
            },
-          token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwYjM5MGZmZmVkODE0OTdkYWMzYzJiMTEyMDc2ZjU3YiIsInN1YiI6IjkiLCJpc3MiOiJzZyIsImlhdCI6MTczNDMzMjE3MywiZXhwIjoxNzM1NTQxNzczfQ.ToVI6fKoFau7YkWinmkcdZxq8HUKmkevUV3X8j09MOk'
+          token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlZTkzYWQ5NjRmZmQ0OGYwOGY4MGMyOWQ4ZTgxM2JhZCIsInN1YiI6IjIyIiwiaXNzIjoic2ciLCJpYXQiOjE3NDMyMTg2NDgsImV4cCI6MTc0NDQyODI0OH0.sYbGLxm-sEye9slsMyxWcfQjI4l7aVzvCtKQRjsJG-w'
 
         }
     },
@@ -104,7 +104,7 @@ export default {
               .catch(error => {
                 // 处理错误
                 console.error('Error:', error);
-                this.$message.error('保存失败，请检查网络或联系管理员！');
+               // this.$message.error('保存失败，请检查网络或联系管理员！');
               });
             axios.post('http://localhost:5003/sendEmail',
               {
